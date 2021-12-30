@@ -7,6 +7,8 @@ import com.yahacode.catchq.model.Result;
 import com.yahacode.catchq.repo.QuestionRepository;
 import com.yahacode.catchq.utils.AccountConsts;
 import com.yahacode.catchq.utils.UrlConsts;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,12 +19,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 @Component
 public class CatchTask {
+
+    private static final Logger log = LoggerFactory.getLogger(CatchTask.class);
 
     @Autowired
     QuestionRepository repository;
@@ -47,7 +50,7 @@ public class CatchTask {
         this.result = result;
         if (result.getData() == null) {
             String token = login();
-            System.out.println(new Date().toString() + " login success, token " + token);
+            log.info("login success, token {}", token);
             return;
         }
         this.id = result.getData().getId();
@@ -65,7 +68,7 @@ public class CatchTask {
 //                System.out.println(q.getId() + " 已存在: " + q.getContent());
             }
         }
-        System.out.println(new Date().toString() + " catch success, id: " + this.id + ", size: " + result.getData().getQuestion().size() + ", add " + counter);
+        log.info("catch success, id: {}, size: {}, add: {}", this.id, result.getData().getQuestion().size(), counter);
     }
 
     private void reset() throws UnsupportedEncodingException {
@@ -80,13 +83,13 @@ public class CatchTask {
         String str = this.id + "CQKXDS6_ANSWER" + AccountConsts.PHONE;
         String base64 = Base64.getEncoder().encodeToString(str.getBytes("utf-8"));
         String key = DigestUtils.md5DigestAsHex(base64.getBytes());
-        System.out.println(new Date().toString() + "key: " + key);
+        log.info("get answer key: {}", key);
 
         String content = "{\"answer\": \"" + answerBase64 + "\",\"answer_id\": " + this.id + ",\"key\": \"" + key +
                 "\"}";
         HttpEntity<String> request = new HttpEntity<>(content, getHeaders());
-        String result = restTemplate.postForEntity(UrlConsts.GET_ANSWER, request, String.class).getBody();
-        System.out.println(result);
+        JSONObject result = restTemplate.postForEntity(UrlConsts.GET_ANSWER, request, JSONObject.class).getBody();
+        log.info("get answer finish: {}", result.get("msg"));
     }
 
     public String login() {
@@ -103,7 +106,7 @@ public class CatchTask {
         return token;
     }
 
-    private HttpHeaders getHeaders(){
+    private HttpHeaders getHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.add("authorization", token);
         headers.add("content-type", "application/json; charset=UTF-8");
