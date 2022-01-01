@@ -40,7 +40,7 @@ public class CatchTask {
 
     @Scheduled(cron = "0 */1 * * * ?")
     public void task() throws UnsupportedEncodingException {
-        reset();
+//        reset();
 
         String content = "{\"type\": 1,\"rule\": 1,\"key\": \"" + AccountConsts.KEY + "\"}";
 
@@ -60,8 +60,8 @@ public class CatchTask {
             Question db = repository.findById(q.getId());
             if (db == null) {
                 Question question = new Question(q.getCategory(), q.getContent(), q.getDistinguish(),
-                        q.getFacility_value(), q.getGroup_id(), q.getId(), q.getOption(), q.getOption_count(),
-                        q.getRight_answer(), q.getTarget_name());
+                        q.getFacilityValue(), q.getGroupId(), q.getId(), q.getOption(), q.getOptionCount(),
+                        q.getRightAnswer(), q.getTargetName());
                 repository.save(question);
                 counter++;
             } else {

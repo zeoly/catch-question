@@ -1,6 +1,11 @@
 package com.yahacode.catchq.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "question")
@@ -16,35 +21,40 @@ public class Question {
 
     int distinguish;
 
-    int facility_value;
+    @Column(name = "facility_value")
+    int facilityValue;
 
-    String group_id;
+    @Column(name = "group_id")
+    String groupId;
 
     int id;
 
     String option;
 
-    int option_count;
+    @Column(name = "option_count")
+    int optionCount;
 
-    String right_answer;
+    @Column(name = "right_answer")
+    String rightAnswer;
 
-    String target_name;
+    @Column(name = "target_name")
+    String targetName;
 
     public Question() {
     }
 
-    public Question(String category, String content, int distinguish, int facility_value, String group_id, int id,
-                    String option, int option_count, String right_answer, String target_name) {
+    public Question(String category, String content, int distinguish, int facilityValue, String groupId, int id,
+                    String option, int optionCount, String rightAnswer, String targetName) {
         this.category = category;
         this.content = content;
         this.distinguish = distinguish;
-        this.facility_value = facility_value;
-        this.group_id = group_id;
+        this.facilityValue = facilityValue;
+        this.groupId = groupId;
         this.id = id;
         this.option = option;
-        this.option_count = option_count;
-        this.right_answer = right_answer;
-        this.target_name = target_name;
+        this.optionCount = optionCount;
+        this.rightAnswer = rightAnswer;
+        this.targetName = targetName;
     }
 
     public Long getQid() {
@@ -79,20 +89,20 @@ public class Question {
         this.distinguish = distinguish;
     }
 
-    public int getFacility_value() {
-        return facility_value;
+    public int getFacilityValue() {
+        return facilityValue;
     }
 
-    public void setFacility_value(int facility_value) {
-        this.facility_value = facility_value;
+    public void setFacilityValue(int facilityValue) {
+        this.facilityValue = facilityValue;
     }
 
-    public String getGroup_id() {
-        return group_id;
+    public String getGroupId() {
+        return groupId;
     }
 
-    public void setGroup_id(String group_id) {
-        this.group_id = group_id;
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     public int getId() {
@@ -111,27 +121,27 @@ public class Question {
         this.option = option;
     }
 
-    public int getOption_count() {
-        return option_count;
+    public int getOptionCount() {
+        return optionCount;
     }
 
-    public void setOption_count(int option_count) {
-        this.option_count = option_count;
+    public void setOptionCount(int optionCount) {
+        this.optionCount = optionCount;
     }
 
-    public String getRight_answer() {
-        return right_answer;
+    public String getRightAnswer() {
+        return rightAnswer;
     }
 
-    public void setRight_answer(String right_answer) {
-        this.right_answer = right_answer;
+    public void setRightAnswer(String rightAnswer) {
+        this.rightAnswer = rightAnswer;
     }
 
-    public String getTarget_name() {
-        return target_name;
+    public String getTargetName() {
+        return targetName;
     }
 
-    public void setTarget_name(String target_name) {
-        this.target_name = target_name;
+    public void setTargetName(String targetName) {
+        this.targetName = targetName;
     }
 }

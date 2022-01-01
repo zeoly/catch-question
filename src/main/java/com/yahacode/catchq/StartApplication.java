@@ -34,7 +34,7 @@ public class StartApplication {
         StringBuilder sb = new StringBuilder();
         for (Question question : list) {
             sb.append("题目：").append(question.getContent()).append("</br>选项：").append(question.getOption()).append(
-                    "</br>答案：").append(question.getRight_answer()).append("</br></br>");
+                    "</br>答案：").append(question.getRightAnswer()).append("</br></br>");
         }
         return sb.toString();
     }
